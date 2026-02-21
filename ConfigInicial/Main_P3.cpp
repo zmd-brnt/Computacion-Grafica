@@ -1,5 +1,5 @@
-//	Previo 3								Pérez Paitán Brent Armando
-//	16 Febrero 2026											 320099649
+//	Práctica 3								Pérez Paitán Brent Armando
+//	21 Febrero 2026											 320099649
 
 #include<iostream>
 
@@ -18,7 +18,7 @@
 // Shaders
 #include "Shader.h"
 
-const GLint WIDTH = 800, HEIGHT = 600;
+const GLint WIDTH = 1200, HEIGHT = 900;
 
 
 int main() {
@@ -32,7 +32,7 @@ int main() {
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Proyecciones y transformaciones basicas", nullptr, nullptr);
+	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Pérez Paitán Brent Armando", nullptr, nullptr);
 
 	int screenWidth, screenHeight;
 
@@ -124,47 +124,47 @@ int main() {
 
 	// use with Perspective Projection
 	float vertices[] = {
-		-0.5f, -0.5f, 0.5f, 1.0f, 0.0f,0.0f,//Front
-		0.5f, -0.5f, 0.5f,  1.0f, 0.0f,0.0f,
-		0.5f,  0.5f, 0.5f,  1.0f, 0.0f,0.0f,
-		0.5f,  0.5f, 0.5f,  1.0f, 0.0f,0.0f,
-		-0.5f,  0.5f, 0.5f, 1.0f, 0.0f,0.0f,
-		-0.5f, -0.5f, 0.5f, 1.0f, 0.0f,0.0f,
+		-0.5f, -0.5f, 0.5f, 0.5137f, 0.8941f, 0.5176f,//Front
+		0.5f, -0.5f, 0.5f,  0.5137f, 0.8941f, 0.5176f,
+		0.5f,  0.5f, 0.5f,  0.5137f, 0.8941f, 0.5176f,
+		0.5f,  0.5f, 0.5f,  0.5137f, 0.8941f, 0.5176f,
+		-0.5f,  0.5f, 0.5f, 0.5137f, 0.8941f, 0.5176f,
+		-0.5f, -0.5f, 0.5f, 0.5137f, 0.8941f, 0.5176f,
 		
-	    -0.5f, -0.5f,-0.5f, 0.0f, 1.0f,0.0f,//Back
-		 0.5f, -0.5f,-0.5f, 0.0f, 1.0f,0.0f,
-		 0.5f,  0.5f,-0.5f, 0.0f, 1.0f,0.0f,
-		 0.5f,  0.5f,-0.5f, 0.0f, 1.0f,0.0f,
-	    -0.5f,  0.5f,-0.5f, 0.0f, 1.0f,0.0f,
-	    -0.5f, -0.5f,-0.5f, 0.0f, 1.0f,0.0f,
+	    -0.5f, -0.5f,-0.5f, 0.8941f, 0.5137f, 0.8863f,//Back
+		 0.5f, -0.5f,-0.5f, 0.8941f, 0.5137f, 0.8863f,
+		 0.5f,  0.5f,-0.5f, 0.8941f, 0.5137f, 0.8863f,
+		 0.5f,  0.5f,-0.5f, 0.8941f, 0.5137f, 0.8863f,
+	    -0.5f,  0.5f,-0.5f, 0.8941f, 0.5137f, 0.8863f,
+	    -0.5f, -0.5f,-0.5f, 0.8941f, 0.5137f, 0.8863f,
 		
-		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 0.0f,1.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f, 0.0f,1.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f, 0.0f,1.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f, 0.0f,1.0f,
-		 0.5f,  -0.5f, 0.5f, 0.0f, 0.0f,1.0f,
+		 0.5f, -0.5f,  0.5f,  0.5137f, 0.5451f, 0.8941f,
+		 0.5f, -0.5f, -0.5f,  0.5137f, 0.5451f, 0.8941f,
+		 0.5f,  0.5f, -0.5f,  0.5137f, 0.5451f, 0.8941f,
+		 0.5f,  0.5f, -0.5f,  0.5137f, 0.5451f, 0.8941f,
+		 0.5f,  0.5f,  0.5f,  0.5137f, 0.5451f, 0.8941f,
+		 0.5f,  -0.5f, 0.5f,  0.5137f, 0.5451f, 0.8941f,
       
-		-0.5f,  0.5f,  0.5f,  1.0f, 1.0f,0.0f,
-		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,0.0f,
-		-0.5f, -0.5f, -0.5f,  1.0f, 1.0f,0.0f,
-		-0.5f, -0.5f, -0.5f,  1.0f, 1.0f,0.0f,
-		-0.5f, -0.5f,  0.5f,  1.0f, 1.0f,0.0f,
-		-0.5f,  0.5f,  0.5f,  1.0f, 1.0f,0.0f,
+		-0.5f,  0.5f,  0.5f,  0.8941f, 0.8627f, 0.5137f,
+		-0.5f,  0.5f, -0.5f,  0.8941f, 0.8627f, 0.5137f,
+		-0.5f, -0.5f, -0.5f,  0.8941f, 0.8627f, 0.5137f,
+		-0.5f, -0.5f, -0.5f,  0.8941f, 0.8627f, 0.5137f,
+		-0.5f, -0.5f,  0.5f,  0.8941f, 0.8627f, 0.5137f,
+		-0.5f,  0.5f,  0.5f,  0.8941f, 0.8627f, 0.5137f,
 		
-		-0.5f, -0.5f, -0.5f, 0.0f, 1.0f,1.0f,
-		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,1.0f,
-		0.5f, -0.5f,  0.5f,  0.0f, 1.0f,1.0f,
-		0.5f, -0.5f,  0.5f,  0.0f, 1.0f,1.0f,
-		-0.5f, -0.5f,  0.5f, 0.0f, 1.0f,1.0f,
-		-0.5f, -0.5f, -0.5f, 0.0f, 1.0f,1.0f,
+		-0.5f, -0.5f, -0.5f, 0.9412f, 0.5569f, 0.5569f,
+		0.5f, -0.5f, -0.5f,  0.9412f, 0.5569f, 0.5569f,
+		0.5f, -0.5f,  0.5f,  0.9412f, 0.5569f, 0.5569f,
+		0.5f, -0.5f,  0.5f,  0.9412f, 0.5569f, 0.5569f,
+		-0.5f, -0.5f,  0.5f, 0.9412f, 0.5569f, 0.5569f,
+		-0.5f, -0.5f, -0.5f, 0.9412f, 0.5569f, 0.5569f,
 		
-		-0.5f,  0.5f, -0.5f, 1.0f, 0.2f,0.5f,
-		0.5f,  0.5f, -0.5f,  1.0f, 0.2f,0.5f,
-		0.5f,  0.5f,  0.5f,  1.0f, 0.2f,0.5f,
-		0.5f,  0.5f,  0.5f,  1.0f, 0.2f,0.5f,
-		-0.5f,  0.5f,  0.5f, 1.0f, 0.2f,0.5f,
-		-0.5f,  0.5f, -0.5f, 1.0f, 0.2f,0.5f,
+		-0.5f,  0.5f, -0.5f, 0.5020f, 0.8784f, 0.8235f,
+		0.5f,  0.5f, -0.5f,  0.5020f, 0.8784f, 0.8235f,
+		0.5f,  0.5f,  0.5f,  0.5020f, 0.8784f, 0.8235f,
+		0.5f,  0.5f,  0.5f,  0.5020f, 0.8784f, 0.8235f,
+		-0.5f,  0.5f,  0.5f, 0.5020f, 0.8784f, 0.8235f,
+		-0.5f,  0.5f, -0.5f, 0.5020f, 0.8784f, 0.8235f,
 	};
 
 
@@ -203,7 +203,7 @@ int main() {
 	
 	glm::mat4 projection=glm::mat4(1);
 
-	projection = glm::perspective(45.0f, (GLfloat)screenWidth / (GLfloat)screenHeight, 0.1f, 100.0f);//FOV, Radio de aspecto,znear,zfar
+	projection = glm::perspective(30.0f, (GLfloat)screenWidth / (GLfloat)screenHeight, 0.1f, 100.0f);//FOV, Radio de aspecto,znear,zfar
 	//projection = glm::ortho(0.0f, (GLfloat)screenWidth, 0.0f, (GLfloat)screenHeight, 0.1f, 1000.0f);//Izq,Der,Fondo,Alto,Cercania,Lejania
 	while (!glfwWindowShouldClose(window))
 	{
@@ -213,45 +213,68 @@ int main() {
 		// Render
 		// Clear the colorbuffer
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
 		// Draw our first triangle
 		ourShader.Use();
-		glm::mat4 model=glm::mat4(1);
-		glm::mat4 view=glm::mat4(1);
-	
-	    view = glm::translate(view, glm::vec3(0.0f,0.0f,-12.0f));
-		model = glm::rotate( model, 0.5f, glm::vec3( 0.0f, 1.5f, 0.0f ) ); // use to compare orthographic and perspective projection
-		model = glm::scale(model, glm::vec3(2.0f, 4.0f, 1.0f));
+		glm::mat4 model = glm::mat4(1);
+		glm::mat4 view = glm::mat4(1);
+
+		view = glm::translate(view, glm::vec3(0.0f, 3.0f, -6.0f));
+		model = glm::rotate(model, 0.4f, glm::vec3(0.0f, 1.0f, 0.0f)); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+
 		//view = glm::translate( view, glm::vec3( screenWidth / 2, screenHeight / 10,-500.0f ) ); // use with orthographic projection
-		
+
 		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
 		GLint viewLoc = glGetUniformLocation(ourShader.Program, "view");
 		GLint projecLoc = glGetUniformLocation(ourShader.Program, "projection");
-		
+
 		glUniformMatrix4fv(projecLoc, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		
+
 
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-		
+
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(5.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, 45.0f, glm::vec3(0.0f, 0.0f, 1.0f)); // use to compare orthographic and perspective projection
-		model = glm::scale(model, glm::vec3(8.0f, 1.0f, 5.0f));
+		model = glm::translate(model, glm::vec3(0.1f, -2.6f, 4.0f));
+		model = glm::rotate(model, 2.5f, glm::vec3(0.0f, 1.0f, 0.0f)); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(1.0f, 0.5f, 0.5f));
+		
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-0.1f, -3.125f, 4.0f));
+		model = glm::rotate(model, 36.15f, glm::vec3(0.0f, 0.0f, 1.0f)); // use to compare orthographic and perspective projection
+		model = glm::rotate(model, 0.5f, glm::vec3(1.0f, -0.15f, 0.0f)); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.2f, -3.94f, 2.9f));
+		model = glm::rotate(model, 42.3f, glm::vec3(1.0f, 0.0f, 0.0f)); // use to compare orthographic and perspective projection
+		model = glm::rotate(model, 0.5f, glm::vec3(0.0f, 0.0f, -1.0f)); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(0.7f, 0.7f, 0.7f));
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, -4.745f, 2.5f));
+		model = glm::rotate(model, 35.0f, glm::vec3(0.0f, -1.0f, 0.1f)); // use to compare orthographic and perspective projection
+		model = glm::scale(model, glm::vec3(3.0f, 0.5f, 0.75f));
+
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		
 		glBindVertexArray(0);
 
-
-
-		
-		
-		
 
 		// Swap the screen buffers
 		glfwSwapBuffers(window);
