@@ -1,5 +1,5 @@
 // Práctica 4									Pérez Paitán Brent Armando
-// 1° MArzo 2026												 320099649
+// 1° Marzo 2026												 320099649
 
 #include<iostream>
 
