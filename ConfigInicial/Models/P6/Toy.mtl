@@ -1,0 +1,20 @@
+newmtl Material.004
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.5 0.5 0.5
+illum 2
+map_Kd solid02L.jpg
+
+newmtl Material.005
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.5 0.5 0.5
+illum 2
+map_Kd solid02L.jpg
+
+newmtl Material.006
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.5 0.5 0.5
+illum 2
+map_Kd solid02L.jpg

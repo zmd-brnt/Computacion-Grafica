@@ -1,5 +1,5 @@
-// Previo 6                     Pérez Paitán Brent Armando
-// 10/03/2026                                    320099649
+// Práctica 6                   Pérez Paitán Brent Armando
+// 15/03/2026                                    320099649
 
 // Std. Includes
 #include <string>
@@ -25,7 +25,7 @@
 #include "stb_image.h"
 
 // Properties
-const GLuint WIDTH = 800, HEIGHT = 600;
+const GLuint WIDTH = 1000, HEIGHT = 800;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 
 // Function prototypes
@@ -35,7 +35,7 @@ void DoMovement( );
 
 
 // Camera
-Camera camera( glm::vec3( 0.0f, 0.0f, 3.0f ) );
+Camera camera( glm::vec3( 0.0f, 1.0f, 3.0f ) );
 bool keys[1024];
 GLfloat lastX = 400, lastY = 300;
 bool firstMouse = true;
@@ -97,8 +97,15 @@ int main( )
     Shader shader( "Shader/modelLoading.vs", "Shader/modelLoading.frag" );
     
     // Load models
-    Model sonic((char*)"Models/sonic.obj");
-    /*Model dog((char*)"Models/RedDog.obj");*/
+
+    Model dog((char*)"Models/RedDog.obj");
+	Model snowman((char*)"Models/P6/objSnow.obj");
+	Model tree((char*)"Models/P6/Pino.obj");
+	Model toy((char*)"Models/P6/Toy.obj");
+	Model snow((char*)"Models/P6/snow_1_2.obj");
+	Model house((char*)"Models/P6/House.obj");
+
+
     glm::mat4 projection = glm::perspective( camera.GetZoom( ), ( float )SCREEN_WIDTH/( float )SCREEN_HEIGHT, 0.1f, 100.0f );
   
 
@@ -127,13 +134,47 @@ int main( )
         // Draw the loaded model
         glm::mat4 model(1);
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        sonic.Draw(shader);
-        /*dog.Draw(shader);
+        
+        dog.Draw(shader);
 
-        model = glm::translate(model, glm::vec3(3.0f, 0.0f, 0.0f));
+        model = glm::translate(model, glm::vec3(1.0f, -0.3625f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        snowman.Draw(shader);
+
+        model = glm::translate(model, glm::vec3(-10.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        tree.Draw(shader);
+
+        model = glm::translate(model, glm::vec3(3.0f, 0.0f, 4.5f));
+        model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        toy.Draw(shader);
+
+        model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(50.0f, 2.0f, 50.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        snow.Draw(shader);
+
+        model = glm::translate(model, glm::vec3(1.0f, 1.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.1f, 3.0f, 0.1f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        house.Draw(shader);
+
+		/*snowman.Draw(shader);
+        
+        model = glm::translate(model, glm::vec3(3.0f, 1.0f, 0.0f));
         model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        dog.Draw(shader);*/
+        dog.Draw(shader);
+
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		snowtree.Draw(shader);*/
+
+
 
         // Swap the buffers
         glfwSwapBuffers( window );

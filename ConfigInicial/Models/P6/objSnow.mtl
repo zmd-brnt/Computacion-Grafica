@@ -1,0 +1,20 @@
+newmtl lambert2SG
+Ka 0.0 0.0 0.0
+Kd 1.0 1.0 1.0
+Ks 0.2 0.2 0.2
+illum 2
+map_Kd snowGood2.jpg
+
+newmtl lambert4SG
+Ka 0.0 0.0 0.0
+Kd 1.0 1.0 1.0
+Ks 0.2 0.2 0.2
+illum 2
+map_Kd solid02L.jpg
+
+newmtl lambert5SG
+Ka 0.0 0.0 0.0
+Kd 1.0 1.0 1.0
+Ks 0.2 0.2 0.2
+illum 2
+map_Kd solid0q.jpg
