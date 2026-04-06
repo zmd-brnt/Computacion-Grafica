@@ -1,0 +1,35 @@
+# Blender 5.0.1 MTL File: 'Window'
+# www.blender.org
+
+newmtl g
+Ns 319.999939
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+
+# Transparencia SOLO para el vidrio
+d 0.3
+illum 4
+
+map_Kd glass.png
+map_d glass.png
+
+
+newmtl w
+Ns 319.999939
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+
+# Marco completamente opaco
+d 1.000000
+illum 2
+
+map_Kd window4_w_BaseColor.png
+map_Bump window4_w_Normal.png
+map_Ns window4_w_Roughness.png
+map_Ks window4_w_Metallic.png
