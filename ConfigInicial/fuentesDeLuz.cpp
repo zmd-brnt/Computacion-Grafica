@@ -1,5 +1,5 @@
-// Previo 9							Pérez Paitán Brent Armando
-// 07/03/2026										 320099649
+// Práctica 9							Pérez Paitán Brent Armando
+// 12/04/2026										     320099649
 
 #include <iostream>
 #include <cmath>
@@ -48,10 +48,10 @@ bool active;
 
 // Positions of the point lights
 glm::vec3 pointLightPositions[] = {
-	glm::vec3(0.0f, 0.0f, 0.0f),
-	glm::vec3(0.0f, 0.0f, 0.0f),
-	glm::vec3(0.0f, 0.0f, 0.0f),
-	glm::vec3(0.0f, 0.0f, 0.0f)
+	glm::vec3(0.5f, -0.5f, 3.5f),   // Luz 0: Fogata (Naranja cálido)
+	glm::vec3(9.0f, 1.9f, -8.77f),  // Luz 1: Poste de luz (Blanco/Amarillo)
+	glm::vec3(-7.0f, -1.15f, -8.0f),  // Luz 2: Linterna (Tenue)
+	glm::vec3(0.0f, 5.0f, 0.0f)     // Luz 3: Cenital extra
 };
 
 float vertices[] = {
@@ -100,7 +100,7 @@ float vertices[] = {
 
 
 
-glm::vec3 Light1 = glm::vec3(0);
+glm::vec3 Light1 = glm::vec3(1.0f);
 
 
 // Deltatime
@@ -156,10 +156,18 @@ int main()
 
 	Shader lightingShader("Shader/lighting.vs", "Shader/lighting.frag");
 	Shader lampShader("Shader/lamp.vs", "Shader/lamp.frag");
-	
-	Model Dog((char*)"Models/Window.obj");
-	Model Piso((char*)"Models/piso.obj");
 
+	// MODELOS
+	Model dog((char*)"Models/RedDog.obj");
+	Model snowman((char*)"Models/P6/objSnow.obj");
+	Model tree((char*)"Models/P6/Pino.obj");
+	Model toy((char*)"Models/P6/Toy.obj");
+	Model snow((char*)"Models/P6/snow_1_2.obj");
+	Model house((char*)"Models/P6/House.obj");
+
+	Model fog((char*)"Models/fogata.obj");
+	Model poste((char*)"Models/PostLuz.obj");
+	Model lint((char*)"Models/Linterna.obj");
 
 
 	// First, set the container's VAO (and VBO)
@@ -197,15 +205,12 @@ int main()
 		DoMovement();
 
 		// Clear the colorbuffer
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClearColor(0.03f, 0.03f, 0.08f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	   
 		// OpenGL options
 		glEnable(GL_DEPTH_TEST);
 
-		
-		
-		//Load Model
 	
 
 		// Use cooresponding shader when setting uniforms/drawing objects
@@ -220,9 +225,10 @@ int main()
 
 		// Directional light
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"),0.0f,0.0f,0.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.0f, 0.0f, 0.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"),0.3f, 0.3f, 0.3f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.15f, 0.15f, 0.2f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.4f, 0.4f, 0.5f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.3f, 0.3f, 0.3f);
+
 
 
 		// Point light 1
@@ -230,37 +236,42 @@ int main()
 		lightColor.x= abs(sin(glfwGetTime() *Light1.x));
 		lightColor.y= abs(sin(glfwGetTime() *Light1.y));
 		lightColor.z= sin(glfwGetTime() *Light1.z);
-
 		
+		float flicker = (rand() % 10) / 100.0f; // Pequeña variación aleatoria opcional
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].position"), pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].ambient"), lightColor.x,lightColor.y, lightColor.z);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].diffuse"), lightColor.x,lightColor.y,lightColor.z);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].specular"), 1.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].ambient"), 0.2f, 0.05f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].diffuse"), 1.0f, 0.4f, 0.0f); // Naranja intenso
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].specular"), 1.0f, 0.4f, 0.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].constant"), 1.0f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].linear"), 0.045f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].quadratic"),0.075f);
-
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].linear"), 0.09f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].quadratic"), 0.032f);
 
 
 		// Point light 2
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].position"), pointLightPositions[1].x, pointLightPositions[1].y, pointLightPositions[1].z);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].ambient"), 0.05f, 0.05f, 0.05f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].diffuse"), 0.0f, 0.0f, 0.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].specular"), 0.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].ambient"), 0.1f, 0.1f, 0.1f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].diffuse"), 0.8f, 0.8f, 0.6f); // Blanco cálido
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].specular"), 0.8f, 0.8f, 0.6f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].constant"), 1.0f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].linear"), 0.0f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].quadratic"), 0.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].linear"), 0.045f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].quadratic"), 0.0075f);
+
+
 
 		// Point light 3
+		// Luz de la Linterna (Point Light 3 / Índice 2)
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].position"), pointLightPositions[2].x, pointLightPositions[2].y, pointLightPositions[2].z);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].ambient"), 0.0f, 0.0f, 0.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].diffuse"), 0.0f, 0.0f, 0.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].specular"), 0.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].ambient"), 0.0f, 0.0f, 0.0f); // Sin ambiente para evitar manchas grises
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].diffuse"), 1.5f, 1.5f, 1.2f);  // Brillo intenso (blanco cálido)
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].specular"), 1.0f, 1.0f, 1.0f);
+
+		// ATENUACIÓN: Valores bajos = mayor alcance
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].constant"), 1.0f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].linear"), 0.0f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].quadratic"), 0.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].linear"), 0.045f);    // Antes 0.14 (muy alto)
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].quadratic"), 0.0075f); // Antes 0.07 (muy alto)
 
 		// Point light 4
+		
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[3].position"), pointLightPositions[3].x, pointLightPositions[3].y, pointLightPositions[3].z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[3].ambient"), 0.0f, 0.0f, 0.0f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[3].diffuse"), 0.0f, 0.0f, 0.0f);
@@ -272,9 +283,9 @@ int main()
 		// SpotLight
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.position"), camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.direction"), camera.GetFront().x, camera.GetFront().y, camera.GetFront().z);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.ambient"), 0.3f, 0.3f, 0.3f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.diffuse"), 0.3f, 0.3f, 0.3f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.specular"),0.0f, 1.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.01f, 0.01f, 0.02f); // Casi negro
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.02f, 0.02f, 0.05f); // Tono azulado muy tenue
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.01f, 0.01f, 0.01f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.constant"), 1.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.linear"), 0.3f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.quadratic"), 0.7f);
@@ -282,7 +293,7 @@ int main()
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.outerCutOff"), glm::cos(glm::radians(18.0f)));
 
 		// Set material properties
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 16.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 8.0f);
 
 		// Create camera transformations
 		glm::mat4 view;
@@ -300,25 +311,79 @@ int main()
 
 		glm::mat4 model(1);
 
-	
-
 		//Carga de modelo 
         view = camera.GetViewMatrix();	
 		model = glm::mat4(1);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Piso.Draw(lightingShader);
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//Piso.Draw(lightingShader);
 
-
+		//
 	
-		model = glm::mat4(1);
-		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//model = glm::mat4(1);
+		////glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
+		////glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 0);
+	 //   Dog.Draw(lightingShader);
+		////glDisable(GL_BLEND);  //Desactiva el canal alfa 
+		//glBindVertexArray(0);
+	
+		// ESCENA
+		// 🟦 PISO (SNOW)
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -1.2f, 0.0f)); // bajar un poco
+		model = glm::scale(model, glm::vec3(10.0f, 1.0f, 10.0f));    // grande tipo terreno
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 1);
-	    Dog.Draw(lightingShader);
-		glDisable(GL_BLEND);  //Desactiva el canal alfa 
-		glBindVertexArray(0);
-	
+		snow.Draw(lightingShader);
+
+		// 🐶 PERRO GRANDE (centro)
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(3.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		dog.Draw(lightingShader);
+
+		// ⛄ MUÑECO DE NIEVE (derecha)
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(4.0f, -1.25f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.65f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		snowman.Draw(lightingShader);
+
+		// 🌲 ÁRBOL (izquierda)
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-4.0f, -1.5f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.85f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		tree.Draw(lightingShader);
+
+		// 🏠 CASA (fondo)
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -1.0f, -12.0f));
+		model = glm::scale(model, glm::vec3(2.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		house.Draw(lightingShader);
+
+		// 🔥 FOGATA (centro frente)
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -1.2f, 3.5f));
+		model = glm::scale(model, glm::vec3(1.25f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		fog.Draw(lightingShader);
+
+		// 💡 POSTE DE LUZ (lado derecho)
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(9.0f, -1.2f, -12.0f));
+		model = glm::scale(model, glm::vec3(1.65f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		poste.Draw(lightingShader);
+
+		// 🔦 LINTERNA (lado izquierdo)
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-7.0f, -1.1f, -8.0f));
+		model = glm::scale(model, glm::vec3(1.9f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		lint.Draw(lightingShader);
 
 		// Also draw the lamp object, again binding the appropriate shader
 		lampShader.Use();

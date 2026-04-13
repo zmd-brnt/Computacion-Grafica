@@ -1,0 +1,49 @@
+# 🔘 BOTÓN
+newmtl knopka
+Ns 100.0
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.3 0.3 0.3
+map_Kd fonarik_low_podknopka_BaseColor.1001.png
+
+# 🟡 CUERPO
+newmtl korpus
+Ns 150.0
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.4 0.4 0.4
+map_Kd fonarik_low_pered_BaseColor.1001.png
+
+# 💡 FOCO (con emisión simulada luego en shader)
+newmtl lampochka
+Ns 10.0
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.2 0.2 0.2
+map_Kd fonarik_low_steklo_BaseColor.1001.png
+
+# 🟢 PARTE FRONTAL
+newmtl pered
+Ns 120.0
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.3 0.3 0.3
+map_Kd fonarik_low_pered_BaseColor.1001.png
+
+# 🔴 BASE BOTÓN
+newmtl podknopka
+Ns 120.0
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.3 0.3 0.3
+map_Kd fonarik_low_podknopka_BaseColor.1001.png
+
+# 🔷 VIDRIO
+newmtl steklo
+Ns 300.0
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 1.0 1.0 1.0
+d 0.3
+illum 4
+map_Kd fonarik_low_steklo_BaseColor.1001.png

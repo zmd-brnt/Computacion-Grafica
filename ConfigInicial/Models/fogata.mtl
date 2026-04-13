@@ -1,0 +1,25 @@
+# Blender MTL corregido - Fogata
+
+newmtl Material.009
+Ns 200.000000
+Ka 0.2 0.1 0.0
+Kd 0.4 0.15 0.0
+Ks 0.3 0.3 0.3
+Ke 0.6 0.2 0.0   # Emisión (brillo rojo tenue)
+Ni 1.450000
+d 1.000000
+illum 2
+
+map_Kd cafe.jpg
+
+newmtl Material.010
+Ns 200.000000
+Ka 0.3 0.15 0.0
+Kd 1.0 0.5 0.0
+Ks 0.4 0.4 0.4
+Ke 1.0 0.4 0.0   # Emisión fuerte (naranja brillante)
+Ni 1.450000
+d 1.000000
+illum 2
+
+map_Kd naranja.jpg
