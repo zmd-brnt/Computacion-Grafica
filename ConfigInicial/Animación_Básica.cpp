@@ -1,5 +1,5 @@
-// Previo 10					Pérez Paitán Brent Armando
-// 14/07/2026									 320099649
+// Práctica 10					Pérez Paitán Brent Armando
+// 16/07/2026									 320099649
 
 #include <iostream>
 #include <cmath>
@@ -104,9 +104,19 @@ float vertices[] = {
 glm::vec3 Light1 = glm::vec3(0);
 //Anim
 float rotBall = 0;
-float trasBall = -0.15f;
+float trasBall = 0;
+float rotDog = 0;
+float trasDog = 0;
 bool sube = true;
 bool AnimBall = false;
+
+float angleDog = 0.0f;
+float angleBall = 3.14159f; // PI = 180 grados en radianes
+
+float posX_Dog = 2.0f;
+float posZ_Dog = 0.0f;
+float posX_Ball = -2.0f;
+float posZ_Ball = 0.0f;
 
 
 // Deltatime
@@ -290,22 +300,19 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Piso.Draw(lightingShader);
 
-		model = glm::mat4(1);
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(posX_Dog, trasDog, posZ_Dog));
+		model = glm::rotate(model, -angleDog, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3( -0.15f, 0.0f, 0.0f)); 
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 0);
 		Dog.Draw(lightingShader);
 
-		model = glm::mat4(1);
-		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(posX_Ball, trasBall, posZ_Ball));
+		model = glm::rotate(model, glm::radians(rotBall), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 1);
+		Ball.Draw(lightingShader);
 
-		model = glm::translate(model, glm::vec3(0.0f, trasBall, 0.2f)); // -0.15 y 1.7
-		
-		/*model = glm::rotate(model, glm::radians(rotBall), glm::vec3(0.0f, 1.0f, 0.0f));*/ 
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-	    Ball.Draw(lightingShader); 
 		glDisable(GL_BLEND);  //Desactiva el canal alfa 
 		glBindVertexArray(0);
 	
@@ -451,31 +458,33 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 	}
 }
 void Animation() {
-	if (AnimBall)
-	{
-		if (trasBall > 1.7f)
-		{
-			sube = false;
-		}
-		else if (trasBall < -0.15f)
-		{
-			sube = true;
-		}
+	if (AnimBall) {
+		
+		angleDog += 0.0003f;
+		angleBall -= 0.0003f;
 
-		if (sube)
-		{
-			trasBall += 0.0005f;
+		float radius = 2.0f;
+		posX_Dog = cos(angleDog) * radius;
+		posZ_Dog = sin(angleDog) * radius;
+		posX_Ball = cos(angleBall) * radius;
+		posZ_Ball = sin(angleBall) * radius;
+
+		float dist = sqrt(pow(posX_Dog - posX_Ball, 2) + pow(posZ_Dog - posZ_Ball, 2));
+		float threshold = 2.5f;
+
+		if (dist < threshold) {
+			
+			float factorLineal = (threshold - dist) / threshold;
+			float factorSuave = (1.0f - cos(factorLineal * 3.14159f)) * 0.5f;
+
+			trasDog = factorSuave * 0.5f;
+			trasBall = 1.5f - (factorSuave * 1.2f);
 		}
-		else
-		{
-			trasBall -= 0.0005f;
+		else {
+			trasDog = 0.0f;
+			trasBall = 1.5f;
 		}
-		//rotBall += 0.2f;
-		//printf("%f", rotBall);
-	}
-	else
-	{
-		//rotBall = 0.0f;
+		rotBall += 0.05f;
 	}
 }
 
