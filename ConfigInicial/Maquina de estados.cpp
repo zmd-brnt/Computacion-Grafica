@@ -1,5 +1,5 @@
-// Previo 11			Pérez Paitán Brent Armando
-// 20/04/2026							 320099649
+// Práctica 11			Pérez Paitán Brent Armando
+// 27/04/2026							 320099649
 
 #include <iostream>
 #include <cmath>
@@ -116,7 +116,7 @@ glm::vec3 dogPos (0.0f,0.0f,0.0f);
 float dogRot = 0.0f;
 bool step = false;
 
-
+int dogPhase = 0; // 0: Caminar Z, 1: Girar Derecha, 2: Caminar X, 3: Girar Izquierda, 4: Caminar Z...
 
 // Deltatime
 GLfloat deltaTime = 0.0f;	// Time between current frame and last frame
@@ -506,43 +506,85 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 }
 
 void Animation() {
-	if (AnimBall)
-	{
-		rotBall += 0.4f;
-		//printf("%f", rotBall);
-	}
-	
-	if (AnimDog)
-	{
-		rotDog -= 0.6f;
-		//printf("%f", rotBall);
-	}
-	if (dogAnim)
-	{
-		if (!step) 
-		{
-			RLegs += 0.03f;
-			FLegs += 0.03f;
-			head += 0.03f;
-			tail += 0.03f;
-
+	if (dogAnim) {
+		if (!step) {
+			RLegs += 0.03f; FLegs += 0.03f; head += 0.03f; tail += 0.03f;
 			if (RLegs > 15.0f) step = true;
 		}
-		else 
-		{
-			RLegs -= 0.03f;
-			FLegs -= 0.03f;
-			head -= 0.03f;
-			tail -= 0.03f;
-
+		else {
+			RLegs -= 0.03f; FLegs -= 0.03f; head -= 0.03f; tail -= 0.03f;
 			if (RLegs < -15.0f) step = false;
 		}
-		if (dogPos.z > 2.3f) dogAnim = 0;
-		dogPos.z += 0.0006f;
 
-		
+		// --- Máquina de Estados ---
+		switch (dogPhase) {
+		case 0: // Caminar hacia adelante (Z)
+			dogPos.z += 0.0006f;
+			if (dogPos.z > 2.0f) dogPhase = 1; 
+			break;
+
+		case 1: // Girar a la derecha
+			dogRot += 0.15f;
+			if (dogRot >= 90.0f) {
+				dogRot = 90.0f;
+				dogPhase = 2;
+			}
+			break;
+
+		case 2: // Caminar en X
+			dogPos.x += 0.0006f;
+			if (dogPos.x > 2.0f) dogPhase = 3; // Punto donde empieza a girar a la izquierda
+			break;
+
+		case 3: // Girar a la izquierda 
+			dogRot += 0.15f;
+			if (dogRot >= 180.0f) {
+				dogRot = 180.0f;
+				dogPhase = 4; // Continuar otro camino
+			}
+			break;
+
+		case 4: // Caminar recto otra vez
+			dogPos.z -= 0.0006f;
+			if (dogPos.z < -2.0f) dogPhase = 5; // Finalizar
+			break;
+
+		case 5:
+			dogRot += 0.15f;
+			if (dogRot >= 270.0f) {
+				dogRot = 270.0f;
+				dogPhase = 6; // Continuar otro camino
+			}
+			break;
+
+		case 6:
+			dogPos.x -= 0.0006f;
+			if (dogPos.x < -2.0f) dogPhase = 7; // Finalizar
+			break;
+
+		case 7:
+			dogRot += 0.15f;
+			if (dogRot >= 405.0f) {
+				dogRot = 405.0f;
+				dogPhase = 8; // Continuar otro camino
+			}
+			break;
+
+		case 8:
+			dogPos.z += 0.0006f;
+			dogPos.x += 0.0006f;
+			if (dogPos.z > 0.0f || dogPos.x > 0.0f) dogPhase = 9;
+			break;
+
+		case 9:
+			dogRot -= 0.15f;
+			if (dogAnim <= 360.0f) {
+				dogRot = 0.0f;
+				dogPhase = 0; // Reiniciar ciclo
+			}
+			break;
+		}
 	}
-	
 }
 
 void MouseCallback(GLFWwindow *window, double xPos, double yPos)
